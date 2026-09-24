@@ -2,161 +2,238 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.42+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.42%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
-![Plotly](https://img.shields.io/badge/Plotly-Dashboards-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
+![LightGBM](https://img.shields.io/badge/LightGBM-Regressor-3B82F6?style=for-the-badge)
+![Plotly](https://img.shields.io/badge/Plotly-Interactive-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-Analytics-150458?style=for-the-badge&logo=pandas&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Production_Ready-success?style=for-the-badge)
 
 <p align="center">
-  <b>An end-to-end Marketing Operations, Unit Economics, and Predictive AI Forecasting Suite.</b>
+  <b>An end-to-end Marketing Operations, Financial Unit Economics, and Machine Learning Revenue Forecasting Suite.</b>
 </p>
 
 </div>
 
 ---
 
-## 📌 Executive Overview
+## 📌 Overview
 
-**Digital Marketing Campaign Analysis & Revenue Intelligence** is an enterprise-grade analytics solution that bridges advertising operations with machine learning and financial unit economics. Designed for growth marketers, performance marketing teams, and executives, this system evaluates historical advertising data across multi-channel campaigns, publisher placements, and creative dimensions to uncover efficiency drivers and forecast campaign revenue.
+**Digital Marketing Campaign Analysis & Revenue Intelligence** is a portfolio-ready analytics solution designed to evaluate multi-channel digital advertising campaigns, quantify unit economics, and forecast campaign revenue using trained machine learning regression pipelines.
 
-The project pairs an **Exploratory Data Analysis (EDA)** and **Machine Learning regression pipeline** with a **Streamlit Business Intelligence Dashboard**, enabling real-time filtering, unit economics audits, and interactive **What-If scenario budget simulations**.
+The system combines:
+1. **Exploratory Data Analysis (EDA)** across 15,408 campaign observations.
+2. **Leakage-Free Machine Learning Regression Pipelines** benchmarking LightGBM, Random Forest, XGBoost, and Support Vector Regression (SVR).
+3. **An Interactive Streamlit Business Intelligence Dashboard** featuring multi-dimensional filtering, unit economics ledgers, automated rule-based diagnostics, and a What-If budget scenario simulator.
+
+<div align="center">
+  <img src="screenshots/dashboard.png" alt="Digital Marketing Campaign Analysis Dashboard Preview" width="900"/>
+</div>
+
+---
+
+## 🎯 Problem Statement
+
+Performance marketing teams often struggle to answer three critical operational questions:
+1. **Attribution & Efficiency**: Which publisher placements, creative dimensions, and audience engagement tiers deliver the highest Return on Ad Spend (ROAS)?
+2. **Unit Economics Clarity**: How do operational ad metrics (CTR, CPC, CVR, CPA) translate into net operating profit and margin?
+3. **Forecasting & Budget Planning**: What is the projected revenue outcome of changing a campaign's budget, target audience, placement, or creative format before committing ad spend?
+
+---
+
+## 🏆 Objectives
+
+- **Multi-Channel Performance Auditing**: Evaluate historical performance across campaigns (`camp 1`, `camp 2`, `camp 3`), creative dimensions (banners), and publisher placements.
+- **Accurate Financial Modeling**: Implement consistent financial formulas that separate gross return (ROAS) from net return percentage (ROI) and net operating margin.
+- **Target Leakage Prevention**: Enforce strict separation between post-outcome business metrics and valid prediction-time features.
+- **Predictive Decision Support**: Train, evaluate, and serialize an ML regression model to simulate revenue outcomes across what-if budget scenarios.
+- **Actionable Strategic Diagnostics**: Provide evidence-based, data-grounded observations and a rule-based query assistant.
+
+---
+
+## 💡 Solution Architecture
 
 ```text
-                                EXECUTIVE DASHBOARD PREVIEW
+┌────────────────────────────────────────────────────────────────────────┐
+│             DIGITAL MARKETING DATA PIPELINE & ARCHITECTURE              │
+└────────────────────────────────────────────────────────────────────────┘
+
+ 1. INGESTION & AUDIT       2. MODEL TRAINING & VALIDATION    3. STREAMLIT BI APP
+ ┌──────────────────────┐   ┌─────────────────────────────┐   ┌──────────────────────┐
+ │ online_advertising_  │   │  model_training.py          │   │  app.py              │
+ │ performance_data.csv │──▶│  - Leakage audit            │──▶│  - Executive KPIs    │
+ │ (15,408 records)     │   │  - 5-Fold Cross Validation  │   │  - 5 Analytics Tabs  │
+ └──────────────────────┘   │  - LightGBM / RF / XGB / SVR│   │  - What-If Simulator │
+                            └──────────────┬──────────────┘   │  - Rule-Based Q&A    │
+                                           │                  └──────────────────────┘
+                                           ▼
+                                ┌──────────────────────┐
+                                │ best_advertising_    │
+                                │ model.pkl (Pipeline) │
+                                └──────────────────────┘
 ```
+
+---
+
+## 📊 Business Metrics & Definitions
+
+To maintain technical and financial rigor, all metrics are formally defined and computed from aggregated numerators and denominators across filtered segments:
+
+| Metric | Type | Definition & Mathematical Formula | Purpose |
+| :--- | :--- | :--- | :--- |
+| **ROAS** | Multiplier | $$\text{ROAS} = \frac{\sum \text{Revenue}}{\sum \text{Cost}}$$ | Measures gross revenue generated per dollar of ad spend (e.g., $2.50\times$). |
+| **ROI** | Percentage | $$\text{ROI} = \left(\frac{\sum \text{Revenue} - \sum \text{Cost}}{\sum \text{Cost}}\right) \times 100\%$$ | Measures net financial return on capital invested after deducting media cost. |
+| **Net Profit** | Currency ($) | $$\text{Net Profit} = \sum \text{Revenue} - \sum \text{Cost}$$ | Absolute net operating profit generated from advertising. |
+| **Profit Margin** | Percentage | $$\text{Margin} = \left(\frac{\text{Net Profit}}{\sum \text{Revenue}}\right) \times 100\%$$ | Share of gross revenue retained as profit. |
+| **CTR** | Percentage | $$\text{CTR} = \left(\frac{\sum \text{Clicks}}{\sum \text{Displays}}\right) \times 100\%$$ | Click-Through Rate measuring creative engagement efficiency. |
+| **CPC** | Currency ($) | $$\text{CPC} = \frac{\sum \text{Cost}}{\sum \text{Clicks}}$$ | Cost Per Click measuring traffic acquisition cost. |
+| **CPM** | Currency ($) | $$\text{CPM} = \left(\frac{\sum \text{Cost}}{\sum \text{Displays}}\right) \times 1000$$ | Cost Per Mille (cost per 1,000 ad impressions). |
+| **CVR** | Percentage | $$\text{CVR} = \left(\frac{\sum \text{Conversions}}{\sum \text{Clicks}}\right) \times 100\%$$ | Conversion Rate measuring click-to-lead/sale conversion. |
+| **CPA** | Currency ($) | $$\text{CPA} = \frac{\sum \text{Cost}}{\sum \text{Conversions}}$$ | Cost Per Acquisition measuring ad spend required per converted customer. |
+
+> **Important Terminology Distinction**: ROAS and ROI are not interchangeable. A ROAS of $2.0\times$ represents a break-even $+100\%$ ROI. A ROAS of $1.0\times$ represents a $0\%$ ROI (break-even).
+
+---
+
+## 📁 Dataset & Schema
+
+The dataset `online_advertising_performance_data.csv` contains **15,408 records** collected across daily advertising operations from April through June:
+
+- `month` *(String)*: Deployment month (`April`, `May`, `June`).
+- `day` *(Integer)*: Day of the month (1–31).
+- `campaign_number` *(Categorical)*: Campaign identifier (`camp 1`, `camp 2`, `camp 3`).
+- `user_engagement` *(Categorical)*: Audience engagement tier (`High`, `Medium`, `Low`).
+- `banner` *(Categorical)*: Creative format dimension (e.g., `300x250`, `728x90`, `160x600`, etc.).
+- `placement` *(Categorical)*: Publisher inventory slot identifier.
+- `displays` *(Integer)*: Number of ad impressions delivered.
+- `cost` *(Float)*: Media budget spent ($).
+- `clicks` *(Integer)*: Number of user clicks generated.
+- `revenue` *(Float)*: Realized revenue ($) — **ML Target Variable**.
+- `post_click_conversions` *(Integer)*: Number of post-click sales/conversions.
+- `post_click_sales_amount` *(Float)*: Post-campaign sales revenue proxy — **Excluded from ML (Leakage)**.
+
+---
+
+## 🛡️ Machine Learning Approach & Leakage Prevention
+
+### Target Leakage Audit
+Predicting campaign revenue requires that all input features be available **before** or **during** campaign execution:
+- **Excluded Features**:
+  - `roi` & `roas`: Derived directly from the target revenue.
+  - `net_profit` & `profit_margin`: Derived directly from the target revenue.
+  - `post_click_sales_amount`: Recorded alongside realized revenue as a direct sales proxy.
+- **Retained Features (12 Valid Inputs)**:
+  - Configuration: `month`, `day`, `campaign_number`, `user_engagement`, `banner`, `placement`
+  - Planned Operating Inputs: `displays`, `cost`, `clicks`, `post_click_conversions`
+  - Forecast-Derived Features: `ctr` ($=\frac{\text{clicks}}{\text{displays}}$), `cpc` ($=\frac{\text{cost}}{\text{clicks}}$)
+
+### Preprocessing & Validation
+- **Categorical Preprocessing**: `OneHotEncoder(handle_unknown='ignore', sparse_output=False)`
+- **Numerical Preprocessing**: `StandardScaler()`
+- **Cross-Validation**: 80/20 Train-Test split (`random_state=42`) + 5-Fold Stratified Cross-Validation on the full feature space.
+
+---
+
+## 🔬 Model Comparison & Benchmark
+
+The four candidate regression architectures were benchmarked under identical leakage-free training conditions:
+
+| Model Architecture | Hold-out MAE ($) | Hold-out RMSE ($) | Hold-out $R^2$ | 5-Fold CV $R^2$ | Status |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **LightGBM Regressor** | **$1.0071** | **$7.5698** | **0.9930** | **0.8595 ± 0.19** | 🥇 **Selected Pipeline** |
+| **Random Forest Regressor** | $0.9022 | $7.7930 | 0.9926 | 0.9189 ± 0.09 | Evaluated Benchmark |
+| **XGBoost Regressor** | $1.0740 | $8.7009 | 0.9908 | 0.8938 ± 0.09 | Evaluated Benchmark |
+| **Support Vector Regressor (SVR)** | $5.3073 | $65.3236 | 0.4795 | 0.5424 ± 0.22 | Baseline Regressor |
+
 <div align="center">
-  <img src="screenshots/dashboard.png" alt="Apex Ad Intelligence Executive Dashboard" width="900"/>
+  <img src="outputs/model_comparison.png" alt="Model Comparison Benchmark" width="800"/>
 </div>
 
----
-
-## 🎯 Project Objectives
-
-- **Multi-Channel Campaign Performance**: Benchmark advertising return across campaigns, ad formats, and audience engagement tiers.
-- **Unit Economics & Financial Auditing**: Quantify advertising efficiency using real-time calculations for ROAS, CPA, CPC, CTR, CVR, and Net Profit Margins.
-- **Machine Learning Revenue Forecasting**: Train and deploy regression pipelines (`best_advertising_model.pkl`) to accurately project revenue outcomes based on budget and conversion parameters.
-- **What-If Scenario Simulation**: Provide dynamic budget sensitivity curves to help marketing leaders allocate media spend profitably.
-- **Automated Strategic Diagnostics**: Generate instant, rule-based diagnostic playbooks identifying high-efficiency revenue drivers and spending hazards.
+### Diagnostic Plots:
+- **Predicted vs. Actual**: `outputs/predicted_vs_actual.png`
+- **Residual Distribution**: `outputs/residual_plot.png`
+- **SHAP Feature Importance**: `outputs/shap_feature_importance.png` (displays statistical feature contributions, not causal attribution)
 
 ---
 
-## 📊 Core Business & Financial KPIs
+## 🚀 Dashboard Modules
 
-| Metric | Business Definition | Formula |
-| :--- | :--- | :--- |
-| **ROAS / ROI** | Return on Ad Spend multiplier | $$\text{ROAS} = \frac{\text{Revenue}}{\text{Cost}}$$ |
-| **CTR (%)** | Click-Through Rate | $$\text{CTR} = \left(\frac{\text{Clicks}}{\text{Displays}}\right) \times 100$$ |
-| **CPC ($)** | Cost Per Click | $$\text{CPC} = \frac{\text{Cost}}{\text{Clicks}}$$ |
-| **CPM ($)** | Cost Per Mille (1,000 Impressions) | $$\text{CPM} = \left(\frac{\text{Cost}}{\text{Displays}}\right) \times 1000$$ |
-| **CVR (%)** | Conversion Rate | $$\text{CVR} = \left(\frac{\text{Conversions}}{\text{Clicks}}\right) \times 100$$ |
-| **CPA ($)** | Cost Per Acquisition / Customer | $$\text{CPA} = \frac{\text{Cost}}{\text{Conversions}}$$ |
-| **Net Profit ($)** | Total Net Margin | $$\text{Net Profit} = \text{Revenue} - \text{Cost}$$ |
-| **Profit Margin (%)**| Net Profit Percentage | $$\text{Margin} = \left(\frac{\text{Net Profit}}{\text{Revenue}}\right) \times 100$$ |
+The Streamlit dashboard (`app.py`) is structured into 5 business-oriented modules:
 
----
+1. **Executive Overview & Performance**:
+   - Dual-axis daily time-series tracking gross revenue, media spend, and net profit.
+   - 3-stage marketing conversion funnel (Displays $\rightarrow$ Clicks $\rightarrow$ Conversions).
+   - Day-of-week revenue and ROAS efficiency analysis.
+   - Cross-campaign side-by-side performance benchmarking.
 
-## 🔍 Exploratory Data Analysis & Analytical Insights
+2. **Placement & Creative Intelligence**:
+   - Multi-dimensional placement matrix (Spend vs. Revenue vs. ROAS with a 1.0x break-even line).
+   - Creative banner dimension revenue distribution (donut chart).
+   - Audience engagement tier conversion rate (CVR) and CPA breakdown.
+   - Top 10 revenue-generating publisher inventory slots table.
 
-### 1. Campaign Revenue & Spend Benchmark
-Benchmarking gross revenue generated against allocated media budget spend across all active marketing campaigns:
+3. **Financial Ledger & Unit Economics**:
+   - Audited unit economics ledger across campaigns and engagement tiers.
+   - Strict ratio calculations from aggregated totals.
+   - Conditional background gradients and one-click CSV ledger export.
 
-<div align="center">
-  <img src="outputs/campaign_performance_benchmark.png" alt="Campaign Performance Benchmark" width="850"/>
-</div>
+4. **Machine Learning Forecast & What-If Simulator**:
+   - Side-by-side **Baseline vs. Scenario** comparative ledger.
+   - Calculates predicted revenue, net profit, ROAS, $\Delta$ revenue, $\Delta$ profit, and % changes.
+   - Interactive budget scaling sensitivity curve ($0.5\times$ to $2.0\times$ multiplier).
+   - Explicit fallback indicators and methodology caveats.
 
-### 2. Creative Dimension (Banner Size) Analysis
-Evaluating creative format efficiency to identify top-converting visual units:
-
-<div align="center">
-  <img src="outputs/creative_dimension_analysis.png" alt="Creative Dimension Analysis" width="850"/>
-</div>
-
-### 3. Metric Correlation Matrix
-Pearson correlation heatmap examining multi-collinearity and statistical relationships between operational ad metrics and revenue:
-
-<div align="center">
-  <img src="outputs/correlation_heatmap.png" alt="Correlation Matrix" width="750"/>
-</div>
-
-### 4. Distribution of Core Variables
-Statistical density distributions of ad impressions, clicks, media costs, and gross returns:
-
-<div align="center">
-  <img src="outputs/feature_distributions.png" alt="Feature Distributions" width="850"/>
-</div>
+5. **Strategic Diagnostics & Query Assistant**:
+   - Automated dynamic diagnostic cards highlighting top drivers, budget reallocation opportunities, and underperforming segments.
+   - **Rule-Based Campaign Query Assistant** providing instant, data-backed answers to natural language metric questions.
 
 ---
 
-## 🤖 Machine Learning Pipeline & Benchmark
-
-The machine learning workflow evaluates multiple regression architectures through automated cross-validation and feature selection to select the best-performing production pipeline:
-
-<div align="center">
-  <img src="outputs/model_benchmark_comparison.png" alt="Model Benchmark Comparison" width="850"/>
-</div>
-
-### Model Architecture Breakdown:
-1. **Preprocessing**: One-Hot Encoding for categorical features (`campaign_number`, `user_engagement`, `banner`, `placement`, `month`) and Standard Scaling for numeric features.
-2. **Feature Selection**: SelectKBest regression scoring ($f\_regression$) to retain the most predictive feature subspace.
-3. **Pipeline Ensemble**: Optimized Random Forest Regressor serialized as `best_advertising_model.pkl` for low-latency dashboard inference.
-
----
-
-## 🚀 Key Dashboard Features
-
-- **Tab 1: Performance Velocity & Conversion Funnel** — Continuous daily time-series tracking of ad spend vs. revenue alongside 3-stage conversion funnels.
-- **Tab 2: Placement & Creative Intelligence** — Multi-dimensional bubble matrix mapping publisher slots by spend, revenue, and ROAS.
-- **Tab 3: Executive Financial Ledger** — Auditable unit economics table with conditional color formatting and one-click CSV export.
-- **Tab 4: AI ML Forecast & What-If Simulator** — Interactive scenario simulator featuring budget scaling sensitivity curves.
-- **Tab 5: Strategic Rule-Based Campaign Diagnostics** — Automated anomaly detection identifying top performance drivers, spend hazards, and recommended budget reallocations.
-
----
-
-## 🛠️ Tech Stack
-
-- **Application & UI**: [Streamlit](https://streamlit.io/)
-- **Data Engineering**: [Pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/)
-- **Visual Analytics**: [Plotly](https://plotly.com/), [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/)
-- **Machine Learning**: [Scikit-Learn](https://scikit-learn.org/), [XGBoost](https://xgboost.readthedocs.io/), [LightGBM](https://lightgbm.readthedocs.io/), [SHAP](https://shap.readthedocs.io/), [Joblib](https://joblib.readthedocs.io/)
-- **Notebook Environment**: Jupyter Notebook
-
----
-
-## 📂 Project Architecture
+## 📂 Project Structure
 
 ```text
 digital-marketing-campaign-analysis/
 │
-├── app.py                                  # Canonical Streamlit production application
-├── model_training.py                       # ML model training, benchmarking & serialization script
-├── best_advertising_model.pkl              # Production ML pipeline artifact
-├── online_advertising_performance_data.csv # Normalized marketing performance dataset (15,408 records)
-├── README.md                               # Project documentation
-├── requirements.txt                        # Project dependencies
-├── .gitignore                              # Git ignore rules
+├── app.py                                  # Production Streamlit BI Application
+├── model_training.py                       # ML Training, Evaluation, SHAP & Serialization Pipeline
+├── best_advertising_model.pkl              # Serialized Production Pipeline (LightGBM)
+├── online_advertising_performance_data.csv # 15,408 Row Ad Operations Dataset
+├── requirements.txt                        # Application Dependencies
+├── README.md                               # Technical Documentation & Portfolio Guide
+├── .gitignore                              # Git Exclusion Rules
+│
+├── .streamlit/
+│   └── config.toml                         # Streamlit Theme & Server Settings
 │
 ├── notebooks/
-│   └── digital_marketing_analysis.ipynb    # End-to-end EDA and ML development notebook
+│   └── digital_marketing_analysis.ipynb    # Jupyter EDA & ML Development Notebook
 │
 ├── screenshots/
-│   └── dashboard.png                       # High-res live dashboard screenshot
+│   └── dashboard.png                       # High-Resolution Dashboard UI Screenshot
 │
 └── outputs/
-    ├── campaign_performance_benchmark.png  # Campaign benchmark chart
-    ├── creative_dimension_analysis.png     # Creative banner format chart
-    ├── correlation_heatmap.png             # Correlation matrix chart
-    ├── feature_distributions.png           # Feature distribution plots
-    └── model_benchmark_comparison.png      # ML benchmark comparison plot
+    ├── model_comparison.csv                # Benchmark Metrics CSV
+    ├── model_comparison.png                # Model Hold-Out vs CV Comparison Plot
+    ├── model_benchmark_comparison.png      # Alternative Benchmark Chart Artifact
+    ├── predicted_vs_actual.png             # Regression Diagnostic: Predicted vs Actual
+    ├── residual_plot.png                   # Regression Diagnostic: Residuals
+    ├── shap_feature_importance.png         # SHAP Feature Importance Plot
+    ├── feature_distributions.png           # Feature Distribution Histograms
+    ├── correlation_heatmap.png             # Pearson Correlation Matrix
+    ├── campaign_performance_benchmark.png  # Campaign Revenue Benchmark Bar Chart
+    └── creative_dimension_analysis.png     # Creative Banner Revenue Bar Chart
 ```
 
 ---
 
-## 💻 How to Run Locally
+## 🛠️ Installation & Setup
 
-### 1. Clone or Open the Project Directory
-```powershell
+### Prerequisites
+- Python 3.10+ (Recommended: Python 3.11 or 3.12)
+- pip package manager
+
+### 1. Clone or Navigate to Project
+```bash
 cd "c:\Users\vk\OneDrive\Desktop\DIGITAL MARKETING CAMPAIGN ANALYSIS"
 ```
 
@@ -165,17 +242,37 @@ cd "c:\Users\vk\OneDrive\Desktop\DIGITAL MARKETING CAMPAIGN ANALYSIS"
 pip install -r requirements.txt
 ```
 
-### 3. Launch the Streamlit Application
+### 3. (Optional) Retrain Machine Learning Models
 ```bash
-python -m streamlit run app.py
+python model_training.py
 ```
 
-👉 The dashboard will open automatically in your browser at **`http://localhost:8501`**.
+### 4. Run the Streamlit Dashboard
+```bash
+streamlit run app.py
+```
+
+👉 The dashboard will open in your browser at **`http://localhost:8501`**.
 
 ---
 
-## 👩‍💻 Author & Lead Analyst
+## ⚠️ Limitations
 
-- **Lead Analyst**: **Samaa Shaikh**
-- **Project Role**: Digital Marketing Campaign Analytics & Revenue Intelligence
-- **Status**: Production Ready
+1. **Observational Data**: Historical records reflect observed campaign settings; predictions represent statistical associations rather than guaranteed causal effects.
+2. **Static Inventory Pricing**: The simulation model assumes historical cost-per-click (CPC) and display pricing remain stable under scaled budgets.
+3. **Timeframe Scope**: Dataset spans three operating months (April–June); seasonal effects outside this quarter are not captured.
+
+---
+
+## 🔮 Future Improvements
+
+- [ ] Incorporate time-series forecasting models (Prophet, ARIMA) for multi-week seasonal trend forecasting.
+- [ ] Implement multi-touch attribution (MTA) models (Markov chain, Shapley attribution) across touchpoints.
+- [ ] Connect live advertising APIs (Google Ads, Meta Marketing API) for continuous automated data ingestion.
+
+---
+
+## 👩‍💻 Author
+
+- **Lead Analyst & Developer**: **Samaa Shaikh**
+- **Domain**: Digital Marketing Campaign Analytics, Performance BI & Predictive Modeling
